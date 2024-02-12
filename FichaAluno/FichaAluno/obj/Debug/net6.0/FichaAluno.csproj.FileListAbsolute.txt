@@ -31,3 +31,4 @@ D:\Ambiente_Desenvolvimento\Aulas_C#\ProjetoCadastroAluns\FichaAluno\FichaAluno\
 D:\Ambiente_Desenvolvimento\Aulas_C#\ProjetoCadastroAluns\FichaAluno\FichaAluno\bin\Debug\net6.0\FirebirdSql.Data.FirebirdClient.dll
 D:\Ambiente_Desenvolvimento\Aulas_C#\ProjetoCadastroAluns\FichaAluno\FichaAluno\obj\Debug\net6.0\FichaAluno.csproj.AssemblyReference.cache
 D:\Ambiente_Desenvolvimento\Aulas_C#\ProjetoCadastroAluns\FichaAluno\FichaAluno\obj\Debug\net6.0\FichaAluno.csproj.CopyComplete
+D:\Ambiente_Desenvolvimento\Aulas_C#\ProjetoCadastroAluns\FichaAluno\FichaAluno\obj\Debug\net6.0\FichaAluno.sourcelink.json
