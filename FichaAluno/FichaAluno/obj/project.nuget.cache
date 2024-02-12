@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "O5RU/0UiNCnfBS9xgl58Om6xd30FnhEbHeA2LCfRe4fc9+YPY8L/ms1ovijE3PGKvahhLuXQ05VWSUlD3T9dhg==",
+  "success": true,
+  "projectFilePath": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\FichaAluno.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hugo\\.nuget\\packages\\firebirdsql.data.firebirdclient\\8.0.0\\firebirdsql.data.firebirdclient.8.0.0.nupkg.sha512",
+    "C:\\Users\\hugo\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.25\\microsoft.windowsdesktop.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\hugo\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.25\\microsoft.netcore.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\hugo\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.25\\microsoft.aspnetcore.app.ref.6.0.25.nupkg.sha512",
+    "C:\\Users\\hugo\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.25\\microsoft.netcore.app.host.win-x64.6.0.25.nupkg.sha512"
+  ],
+  "logs": []
+}

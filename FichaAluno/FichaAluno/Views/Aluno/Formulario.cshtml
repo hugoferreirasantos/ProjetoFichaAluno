@@ -1,0 +1,128 @@
+﻿@model FichaAluno.Models.Domain.AlunoModel
+@{
+    // restante do código
+}
+
+<div class="text-center">
+
+    <h1 class="display-4 ">@(Model != null ? (Model.MATRICULA == 0 ? ViewData["Title"] = "Adicionar Aluno" : ViewData["Title"] = "Edição de Aluno") : ViewData["Title"] = "Adicionar Aluno")</h1>
+
+</div>
+
+<form asp-controller="Aluno" asp-action="Formulario" method="post">
+    <input type="hidden" asp-for="MATRICULA" />
+
+    <div class="form-group">
+        <label asp-for="NOME">Nome</label>
+        <input asp-for="NOME" type="text" class="form-control" minlength="3" maxlength="100" placeholder="Digite o nome" required>
+        <span asp-validation-for="NOME" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CPF">CPF</label>
+        <input asp-for="CPF" type="text" class="form-control" maxlength="11" placeholder="Digite o CPF">
+    </div>
+
+    @if (ViewData["Title"] == "Adicionar Aluno")
+    {
+        <div class="form-group">
+            <label asp-for="NASCIMENTO">Nascimento</label>
+            <input id="NASCIMENTO" asp-for="NASCIMENTO" type="text" class="form-control" minlength="10" maxlength="10" placeholder="DD/MM/YYYY" required>
+            <span asp-validation-for="NASCIMENTO" class="text-danger"></span>
+        </div>
+    }
+
+    @if (ViewData["Title"] == "Edição de Aluno")
+    {
+        <div class="form-group">
+            <label asp-for="NASCIMENTO">Nascimento</label>
+            <input id="NASCIMENTO" asp-for="NASCIMENTO" type="text" class="form-control" maxlength="22" placeholder="DD/MM/YY" required>
+            <span asp-validation-for="NASCIMENTO" class="text-danger"></span>
+        </div>
+    }
+
+
+    <br />
+
+    <select asp-for="SEXO" class="form-select" style="width: 150px;" required>
+        <option value="">Sexo</option>
+        <option value="0">Masculino</option>
+        <option value="1">Feminino</option>
+    </select>
+
+    <br />
+
+    <div>
+        <button type="submit" class="btn btn-primary btn-block" style="background-color: #00BFFF; color: black">Salvar</button>
+        <a class="btn btn-secondary btn-block" asp-controller="Aluno" asp-action="Index" role="button">Voltar</a>
+    </div>
+
+</form>
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                @if (ViewData["Title"] == "Adicionar Aluno")
+                {
+                    <h5 class="modal-title" id="successModalLabel">
+                        Cadastro Concluído
+                    </h5>
+                }
+
+                @if (ViewData["Title"] == "Edição de Aluno")
+                {
+                <h5 class="modal-title" id="successModalLabel">
+                    Cadastro Atualizado
+                </h5>
+                }
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @if (ViewData["Title"] == "Adicionar Aluno")
+            {
+                <div class="modal-body">
+                    O cadastro foi concluído com sucesso!
+                </div>
+            }
+            @if (ViewData["Title"] == "Edição de Aluno")
+            {
+                <div class="modal-body">
+                    O cadastro foi atualizado com sucesso!
+                </div>
+            }
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="window.location.href='https://localhost:7085/Aluno'">Voltar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var showSuccessModal = '@TempData["ShowSuccessModal"]';
+        if (showSuccessModal === 'True') {
+            $('#successModal').modal('show');
+        }
+    });
+
+    
+    $(function () {
+        $(document.getElementById("NASCIMENTO").datepicker({
+            dateFormat: 'dd/mm/yyyy', // Alterado aqui
+            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            nextText: 'Próximo',
+            prevText: 'Anterior'
+        });
+    });
+    s
+</script>
