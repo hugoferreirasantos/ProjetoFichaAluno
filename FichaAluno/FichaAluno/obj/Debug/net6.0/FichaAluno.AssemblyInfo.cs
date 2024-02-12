@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FichaAluno")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c5cc5dc4327e0c895413dfafbee63ac85eb8a7dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+66ddeadecf4cf1d369519f690aa5725599f9c3e8")]
 [assembly: System.Reflection.AssemblyProductAttribute("FichaAluno")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FichaAluno")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

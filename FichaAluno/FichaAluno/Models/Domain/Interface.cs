@@ -7,7 +7,7 @@ namespace FichaAluno.Models.Domain
         string NOME { set; get; }
 
         string CPF { set; get; }
-        string NASCIMENTO { set; get; }
+        DateTime NASCIMENTO { set; get; }
         EnumeradorSexo SEXO { set; get; }
 
 

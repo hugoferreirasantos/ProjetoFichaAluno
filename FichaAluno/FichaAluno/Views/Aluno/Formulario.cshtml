@@ -27,7 +27,7 @@
     {
         <div class="form-group">
             <label asp-for="NASCIMENTO">Nascimento</label>
-            <input id="NASCIMENTO" asp-for="NASCIMENTO" type="text" class="form-control" minlength="10" maxlength="10" placeholder="DD/MM/YYYY" required>
+            <input id="NASCIMENTO" asp-for="NASCIMENTO" type="date" class="form-control"  maxlength="8" placeholder="DD/MM/YYYY" required>
             <span asp-validation-for="NASCIMENTO" class="text-danger"></span>
         </div>
     }
@@ -36,7 +36,7 @@
     {
         <div class="form-group">
             <label asp-for="NASCIMENTO">Nascimento</label>
-            <input id="NASCIMENTO" asp-for="NASCIMENTO" type="text" class="form-control" maxlength="22" placeholder="DD/MM/YY" required>
+            <input id="NASCIMENTO" asp-for="NASCIMENTO" type="date" class="form-control"  maxlength="8" placeholder="DD/MM/YY" required>
             <span asp-validation-for="NASCIMENTO" class="text-danger"></span>
         </div>
     }

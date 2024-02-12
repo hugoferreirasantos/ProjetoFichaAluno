@@ -1,5 +1,6 @@
 ﻿using FichaAluno.Models.Domain;
 using FirebirdSql.Data.FirebirdClient;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Security;
 using System.Security.Cryptography;
@@ -23,7 +24,9 @@ namespace FichaAluno.Models.Repository
                 {
                     cmd.Parameters.AddWithValue("@Cpf", DBNull.Value);
                 }
-                cmd.Parameters.AddWithValue("@Nascimento", entity.NASCIMENTO);
+                string nascimentoFormatado = entity.NASCIMENTO.ToString("yyyyMMdd");
+                int nascimentoAsInt = int.Parse(nascimentoFormatado);
+                cmd.Parameters.AddWithValue("@Nascimento", nascimentoAsInt);
                 cmd.Parameters.AddWithValue("@Sexo", entity.SEXO);
 
                 cmd.ExecuteNonQuery();
@@ -61,7 +64,9 @@ namespace FichaAluno.Models.Repository
                 }
                 if(entity.NASCIMENTO != null)
                 {
-                    cmd.Parameters.AddWithValue("@Nascimento", entity.NASCIMENTO);
+                    string nascimentoFormatado = entity.NASCIMENTO.ToString("yyyyMMdd");
+                    int nascimentoAsInt = int.Parse(nascimentoFormatado);
+                    cmd.Parameters.AddWithValue("@Nascimento", nascimentoAsInt);
                 }
                 else
                 {
@@ -78,24 +83,27 @@ namespace FichaAluno.Models.Repository
 
         public override IEnumerable<AlunoModel> GetAll()
         {
-            string selectSQL = "SELECT MATRICULA,NOME,SEXO,DTNASCIMENTO,SUBSTRING(CPF FROM 1 FOR 3) || '.' || SUBSTRING(CPF FROM 4 FOR 3 ) || '.'  || SUBSTRING(CPF FROM 7 FOR 3) || '-' || SUBSTRING(CPF FROM 10 FOR 2) AS CPF FROM TBALUNO A  ORDER BY NOME";
+            string selectSQL = "SELECT MATRICULA,NOME,SEXO,SUBSTRING(DTNASCIMENTO FROM 7 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 5 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 1 FOR 4) AS DTNASCIMENTO,SUBSTRING(CPF FROM 1 FOR 3) || '.' || SUBSTRING(CPF FROM 4 FOR 3 ) || '.' || SUBSTRING(CPF FROM 7 FOR 3) || '-' || SUBSTRING(CPF FROM 10 FOR 2) AS CPF FROM TBALUNO A ORDER BY NOME";
 
             List<AlunoModel> alunos = new List<AlunoModel>();
 
-            using(FbCommand cmd = new FbCommand(selectSQL, dao.connection))
+            using (FbCommand cmd = new FbCommand(selectSQL, dao.connection))
             {
-                using(FbDataReader reader = cmd.ExecuteReader())
+                using (FbDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
-                    {
+                    { 
+
                         AlunoModel aluno = new AlunoModel()
                         {
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO = reader.IsDBNull(reader.GetOrdinal("DTNASCIMENTO")) ? null : reader.GetString(reader.GetOrdinal("DTNASCIMENTO")),
+                            NASCIMENTO = reader.GetDateTime(reader.GetOrdinal("DTNASCIMENTO")),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
+
+                        
 
                         alunos.Add(aluno);
                     }
@@ -103,8 +111,6 @@ namespace FichaAluno.Models.Repository
             }
 
             return alunos;
-
-
         }
 
         public override AlunoModel Get(string predicate, params object[] parameters)
@@ -124,12 +130,13 @@ namespace FichaAluno.Models.Repository
                 {
                     if (reader.Read())
                     {
+                        string dataComoString = reader.GetInt32(reader.GetOrdinal("DTNASCIMENTO")).ToString();
                         aluno = new AlunoModel()
                         {
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO = reader.IsDBNull(reader.GetOrdinal("DTNASCIMENTO")) ? null : reader.GetString(reader.GetOrdinal("DTNASCIMENTO")),
+                            NASCIMENTO = DateTime.ParseExact(dataComoString, "yyyyMMdd", CultureInfo.InvariantCulture),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
                     }
@@ -141,7 +148,7 @@ namespace FichaAluno.Models.Repository
 
         public IEnumerable<AlunoModel> GetAllGetByMatricula(string matricula)
         {
-            string selectSQL = "SELECT MATRICULA,NOME,SEXO,DTNASCIMENTO,SUBSTRING(CPF FROM 1 FOR 3) || '.' || SUBSTRING(CPF FROM 4 FOR 3 ) || '.'  || SUBSTRING(CPF FROM 7 FOR 3) || '-' || SUBSTRING(CPF FROM 10 FOR 2) AS CPF FROM TBALUNO A WHERE CAST(MATRICULA AS VARCHAR(20)) LIKE @matricula ORDER BY NOME";
+            string selectSQL = "SELECT MATRICULA,NOME,SEXO,SUBSTRING(DTNASCIMENTO FROM 7 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 5 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 1 FOR 4) AS DTNASCIMENTO,SUBSTRING(CPF FROM 1 FOR 3) || '.' || SUBSTRING(CPF FROM 4 FOR 3 ) || '.' || SUBSTRING(CPF FROM 7 FOR 3) || '-' || SUBSTRING(CPF FROM 10 FOR 2) AS CPF FROM TBALUNO A WHERE CAST(MATRICULA AS VARCHAR(20)) LIKE @matricula ORDER BY NOME";
 
             List<AlunoModel> alunos = new List<AlunoModel>();
 
@@ -158,7 +165,7 @@ namespace FichaAluno.Models.Repository
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO = reader.IsDBNull(reader.GetOrdinal("DTNASCIMENTO")) ? null : reader.GetString(reader.GetOrdinal("DTNASCIMENTO")),
+                            NASCIMENTO =  reader.GetDateTime(reader.GetOrdinal("DTNASCIMENTO")),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
 
@@ -172,7 +179,7 @@ namespace FichaAluno.Models.Repository
 
         public IEnumerable<AlunoModel> GetAllGetByNome(string nome)
         {
-            string selectSQL = "SELECT MATRICULA,NOME,SEXO,DTNASCIMENTO,SUBSTRING(CPF FROM 1 FOR 3) || '.' || SUBSTRING(CPF FROM 4 FOR 3 ) || '.'  || SUBSTRING(CPF FROM 7 FOR 3) || '-' || SUBSTRING(CPF FROM 10 FOR 2) AS CPF FROM TBALUNO A WHERE CAST(NOME AS VARCHAR(100)) LIKE @nome ORDER BY NOME";
+            string selectSQL = "SELECT MATRICULA,NOME,SEXO,SUBSTRING(DTNASCIMENTO FROM 7 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 5 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 1 FOR 4) AS DTNASCIMENTO,SUBSTRING(CPF FROM 1 FOR 3) || '.' || SUBSTRING(CPF FROM 4 FOR 3 ) || '.' || SUBSTRING(CPF FROM 7 FOR 3) || '-' || SUBSTRING(CPF FROM 10 FOR 2) AS CPF FROM TBALUNO A WHERE CAST(NOME AS VARCHAR(100)) LIKE @nome ORDER BY NOME";
 
             List<AlunoModel> alunos = new List<AlunoModel>();
 
@@ -189,7 +196,7 @@ namespace FichaAluno.Models.Repository
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO = reader.IsDBNull(reader.GetOrdinal("DTNASCIMENTO")) ? null : reader.GetString(reader.GetOrdinal("DTNASCIMENTO")),
+                            NASCIMENTO = reader.GetDateTime(reader.GetOrdinal("DTNASCIMENTO")),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
 

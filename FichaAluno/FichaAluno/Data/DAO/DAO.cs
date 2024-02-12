@@ -7,7 +7,7 @@ namespace FichaAluno.Data.DAO
     {
         private static string pUser = "SYSDBA";
         private static string pPassword = "masterkey";
-        private static string pDatabase = "localhost:D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\Dados\\DBESCOLAR.FDB";
+        private static string pDatabase = "localhost:D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\Dados\\DBESCOLAR_TESTE.FDB";
         private static string pDataSource = "localhost";
         private static int pPort = 3050;
         private static int pDialet = 3;
