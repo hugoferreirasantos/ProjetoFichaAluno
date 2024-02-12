@@ -19,8 +19,8 @@
         <form asp-controller="Aluno" asp-action="Index" method="post">
             <div class="mb-3 align-items-center text-left">
                 <label style="color: black; font-weight: bold;" class="form-label">Opção de busca:</label>
-                <input type="radio" name="opcaoBusca" value="matricula" /> Matrícula
-                <input type="radio" name="opcaoBusca" value="nome" />Nome
+                <input type="radio" name="opcaoBusca" value="matricula" checked /> Matrícula
+                <input type="radio" name="opcaoBusca" value="nome" checked />Nome
                 <div class="input-group">
                     <input type="text" name="valorBusca" class="form-control" placeholder="Matrícula ou nome do aluno...">
                     <div class="input-group-append">
@@ -69,6 +69,18 @@
 
 </div>
 
+
+@if (!ViewData.ModelState.IsValid)
+{
+    foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+    {
+        <div class="alert alert-danger">
+            @error.ErrorMessage
+        </div>
+    }
+}
+
+
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -89,34 +101,38 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-    $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
         // Quando o botão de exclusão é clicado
-        $('.delete-button').click(function (e) {
-            e.preventDefault();
+        var deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(function (button) {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
 
-            // Obter o ID do aluno
-            var alunoId = $(this).data('aluno-id');
+                // Obter o ID do aluno
+                var alunoId = this.getAttribute('data-aluno-id');
 
-            // Definir o href do botão de confirmação na modal
-            $('#deleteButton').attr('href', '/Aluno/Excluir/' + alunoId);
+                // Definir o href do botão de confirmação na modal
+                var deleteButton = document.getElementById('deleteButton');
+                deleteButton.setAttribute('href', '/Aluno/Excluir/' + alunoId);
 
-            // Mostrar a modal
-            $('#confirmDeleteModal').modal('show');
+                // Mostrar a modal
+                var confirmDeleteModalElement = document.getElementById('confirmDeleteModal');
+                var confirmDeleteModal = new bootstrap.Modal(confirmDeleteModalElement);
+                confirmDeleteModal.show();
+            });
         });
-    });
 
-    $(document).ready(function () {
         // Quando o botão de fechar é clicado
-        $('.close').click(function (e) {
-            e.preventDefault();
+        var closeButtons = document.querySelectorAll('.close');
+        closeButtons.forEach(function (button) {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
 
-            // Redirecionar para a página de alunos
-            window.location.href = '/Aluno';
+                // Redirecionar para a página de alunos
+                window.location.href = '/Aluno';
+            });
         });
     });
-
-
 </script>

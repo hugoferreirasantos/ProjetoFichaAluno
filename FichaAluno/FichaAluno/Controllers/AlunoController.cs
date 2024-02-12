@@ -1,6 +1,7 @@
 ﻿using FichaAluno.Models.Domain;
 using FichaAluno.Models.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Globalization;
 
 namespace FichaAluno.Controllers
@@ -17,44 +18,75 @@ namespace FichaAluno.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var alunos = repositorio.GetAll();
-            return View(alunos);
+            try
+            {
+                var alunos = repositorio.GetAll();
+                return View(alunos);
+            }
+            catch (Exception ex)
+            {
+                var erro = new ErrorModel { ErrorMessage = ex.Message };
+                ModelState.AddModelError("", erro.ErrorMessage);
+            }
+
+            return View();
         }
 
         [HttpGet]
         public IActionResult Formulario(int? id)
         {
-            AlunoModel viewModel = null;
-
-            if (id.HasValue)
+            try
             {
-                viewModel = repositorio.Get("MATRICULA = @p0", new object[] { id });
-                if (viewModel == null)
+                AlunoModel viewModel = null;
+
+                if (id.HasValue)
                 {
-                    return NotFound();
+                    viewModel = repositorio.Get("MATRICULA = @p0", new object[] { id });
+                    if (viewModel == null)
+                    {
+                        return NotFound();
+                    }
                 }
+
+                return View(viewModel);
+            }
+            catch (Exception ex)
+            {
+                var erro = new ErrorModel { ErrorMessage = ex.Message };
+                ModelState.AddModelError("", erro.ErrorMessage);
             }
 
-            return View(viewModel);
+            return View();
+
         }
 
         [HttpGet]
         public IActionResult Excluir(int? id)
         {
-            // Busca o aluno pelo ID
-            var aluno = repositorio.Get("MATRICULA = @p0", new object[] { id });
-
-            // Verifica se o aluno existe
-            if (aluno == null)
+            try
             {
-                return NotFound();
+                // Busca o aluno pelo ID
+                var aluno = repositorio.Get("MATRICULA = @p0", new object[] { id });
+
+                // Verifica se o aluno existe
+                if (aluno == null)
+                {
+                    return NotFound();
+                }
+
+                // Exclui o aluno
+                repositorio.Remove(aluno);
+
+                // Redireciona para a página de lista de alunos
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                var erro = new ErrorModel { ErrorMessage = ex.Message };
+                ModelState.AddModelError("", erro.ErrorMessage);
             }
 
-            // Exclui o aluno
-            repositorio.Remove(aluno);
-
-            // Redireciona para a página de lista de alunos
-            return RedirectToAction("Index");
+            return View();
         }
 
 
@@ -63,9 +95,13 @@ namespace FichaAluno.Controllers
         {
             IEnumerable<AlunoModel> alunos;
 
-            if (opcaoBusca == "matricula")
+            if (string.IsNullOrEmpty(valorBusca))
             {
-                //int matricula = int.Parse(valorBusca)
+                alunos = repositorio.GetAll();
+                return RedirectToAction("Index");
+            }
+            else if (opcaoBusca == "matricula")
+            {
                 alunos = repositorio.GetAllGetByMatricula(valorBusca);
             }
             else if (opcaoBusca == "nome")
@@ -85,18 +121,25 @@ namespace FichaAluno.Controllers
         {
             if (aluno != null)
             {
-
-                if (aluno.MATRICULA > 0)
+                try
                 {
-                    repositorio.Update(aluno);
-                    TempData["ShowSuccessModal"] = true;
+                    if (aluno.MATRICULA > 0)
+                    {
+                        repositorio.Update(aluno);
+                        TempData["ShowSuccessModal"] = true;
+                    }
+                    else
+                    {
+                        repositorio.Add(aluno);
+                        TempData["ShowSuccessModal"] = true;
+                    }
+                    return View(aluno);
                 }
-                else
+                catch (Exception ex)
                 {
-                    repositorio.Add(aluno);
-                    TempData["ShowSuccessModal"] = true;
+                    var erro = new ErrorModel { ErrorMessage = ex.Message };
+                    ModelState.AddModelError("", erro.ErrorMessage);
                 }
-                return View(aluno);
             }
             else
             {
@@ -109,7 +152,7 @@ namespace FichaAluno.Controllers
             return View(aluno);
         }
 
-        
+
     }
             
 

@@ -77,7 +77,7 @@
                 </h5>
                 }
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" onclick="window.location.href='https://localhost:7085/Aluno'" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -101,13 +101,14 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
-    $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
         var showSuccessModal = '@TempData["ShowSuccessModal"]';
         if (showSuccessModal === 'True') {
-            $('#successModal').modal('show');
+            var successModalElement = document.getElementById('successModal');
+            var successModal = new bootstrap.Modal(successModalElement);
+            successModal.show();
         }
     });
-
 </script>
