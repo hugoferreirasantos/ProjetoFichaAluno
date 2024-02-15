@@ -52,7 +52,7 @@
                             <td>@aluno.NOME</td>
                             <td>@aluno.SEXO</td>
                             <td>@aluno.NASCIMENTO_FORMATADO</td>
-                            <td>@aluno.CPF</td>
+                            <td>@aluno.CPF_FORMATADO</td>
                             <td>
                                 <a asp-controller="Aluno" asp-action="Formulario" asp-route-id="@aluno.MATRICULA" class="btn border-white   style-color-buttons" style="color: white"><i class="material-icons">edit</i>Editar</a>
                                 <a data-aluno-id="@aluno.MATRICULA"  asp-controller="Aluno" asp-action="Excluir" asp-route-id="@aluno.MATRICULA" class="btn btn-secondary border-white delete-button"><i class="material-icons">delete</i>Excluir</a>
@@ -86,7 +86,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmação de Exclusão</h5>
-                <button type="button" asp-controller="Aluno" asp-action="Index" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -94,7 +94,7 @@
                 Tem certeza de que deseja excluir este aluno?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary close" data-dismiss="modal" asp-controller="Aluno" asp-action="Index">Não</button>
+                <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" >Não</button>
                 <a id="deleteButton" class="btn btn-primary">Sim</a>
             </div>
         </div>

@@ -23,23 +23,11 @@
         <input asp-for="CPF" type="text" class="form-control" maxlength="11" placeholder="Digite o CPF">
     </div>
 
-    @if (ViewData["Title"] == "Adicionar Aluno")
-    {
-        <div class="form-group">
-            <label asp-for="NASCIMENTO">Nascimento</label>
-            <input id="NASCIMENTO" asp-for="NASCIMENTO" type="date" class="form-control"  maxlength="8" placeholder="DD/MM/YYYY" required>
-            <span asp-validation-for="NASCIMENTO" class="text-danger"></span>
-        </div>
-    }
-
-    @if (ViewData["Title"] == "Edição de Aluno")
-    {
-        <div class="form-group">
-            <label asp-for="NASCIMENTO">Nascimento</label>
-            <input id="NASCIMENTO" asp-for="NASCIMENTO" type="date" class="form-control"  maxlength="8" placeholder="DD/MM/YY" required>
-            <span asp-validation-for="NASCIMENTO" class="text-danger"></span>
-        </div>
-    }
+    <div class="form-group">
+        <label asp-for="NASCIMENTO">Nascimento</label>
+        <input id="NASCIMENTO" asp-for="NASCIMENTO" type="date" class="form-control" maxlength="4" placeholder="DD/MM/YYYY" pattern="\d{8}" required>
+        <span asp-validation-for="NASCIMENTO" class="text-danger"></span>
+    </div>
 
 
     <br />
@@ -58,6 +46,8 @@
     </div>
 
 </form>
+
+
 
 <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -102,6 +92,28 @@
 </div>
 
 
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">
+                    Atenção!
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                O CPF digitado é inválido.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var showSuccessModal = '@TempData["ShowSuccessModal"]';
@@ -109,6 +121,15 @@
             var successModalElement = document.getElementById('successModal');
             var successModal = new bootstrap.Modal(successModalElement);
             successModal.show();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var showErrorModal = '@TempData["ShowErrorModal"]';
+        if (showErrorModal === 'True') {
+            var errorModalElement = document.getElementById('errorModal');
+            var errorModal = new bootstrap.Modal(errorModalElement);
+            errorModal.show();
         }
     });
 </script>

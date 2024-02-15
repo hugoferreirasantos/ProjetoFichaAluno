@@ -83,7 +83,7 @@ namespace FichaAluno.Models.Repository
 
         public override IEnumerable<AlunoModel> GetAll()
         {
-            string selectSQL = "SELECT MATRICULA,NOME,SEXO,SUBSTRING(DTNASCIMENTO FROM 7 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 5 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 1 FOR 4) AS DTNASCIMENTO,SUBSTRING(CPF FROM 1 FOR 3) || '.' || SUBSTRING(CPF FROM 4 FOR 3 ) || '.' || SUBSTRING(CPF FROM 7 FOR 3) || '-' || SUBSTRING(CPF FROM 10 FOR 2) AS CPF FROM TBALUNO A ORDER BY NOME";
+            string selectSQL = "SELECT MATRICULA,NOME,SEXO,DTNASCIMENTO,CPF FROM TBALUNO A ORDER BY NOME";
 
             List<AlunoModel> alunos = new List<AlunoModel>();
 
@@ -92,14 +92,15 @@ namespace FichaAluno.Models.Repository
                 using (FbDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
-                    { 
+                    {
+                        string dtnascimentoString = reader.GetString(reader.GetOrdinal("DTNASCIMENTO"));
 
                         AlunoModel aluno = new AlunoModel()
                         {
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO = reader.GetDateTime(reader.GetOrdinal("DTNASCIMENTO")),
+                            NASCIMENTO = DateTime.ParseExact(dtnascimentoString, "yyyyMMdd", CultureInfo.InvariantCulture),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
 
@@ -148,7 +149,7 @@ namespace FichaAluno.Models.Repository
 
         public IEnumerable<AlunoModel> GetAllGetByMatricula(string matricula)
         {
-            string selectSQL = "SELECT MATRICULA,NOME,SEXO,SUBSTRING(DTNASCIMENTO FROM 7 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 5 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 1 FOR 4) AS DTNASCIMENTO,SUBSTRING(CPF FROM 1 FOR 3) || '.' || SUBSTRING(CPF FROM 4 FOR 3 ) || '.' || SUBSTRING(CPF FROM 7 FOR 3) || '-' || SUBSTRING(CPF FROM 10 FOR 2) AS CPF FROM TBALUNO A WHERE CAST(MATRICULA AS VARCHAR(20)) LIKE @matricula ORDER BY NOME";
+            string selectSQL = "SELECT MATRICULA,NOME,SEXO,DTNASCIMENTO ,CPF  FROM TBALUNO A WHERE CAST(MATRICULA AS VARCHAR(20)) LIKE @matricula ORDER BY NOME";
 
             List<AlunoModel> alunos = new List<AlunoModel>();
 
@@ -158,14 +159,16 @@ namespace FichaAluno.Models.Repository
 
                 using (FbDataReader reader = cmd.ExecuteReader())
                 {
+                    
                     while (reader.Read())
                     {
+                        string dtnascimentoString = reader.GetString(reader.GetOrdinal("DTNASCIMENTO"));
                         AlunoModel aluno = new AlunoModel()
                         {
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO =  reader.GetDateTime(reader.GetOrdinal("DTNASCIMENTO")),
+                            NASCIMENTO = DateTime.ParseExact(dtnascimentoString, "yyyyMMdd", CultureInfo.InvariantCulture),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
 
@@ -179,7 +182,7 @@ namespace FichaAluno.Models.Repository
 
         public IEnumerable<AlunoModel> GetAllGetByNome(string nome)
         {
-            string selectSQL = "SELECT MATRICULA,NOME,SEXO,SUBSTRING(DTNASCIMENTO FROM 7 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 5 FOR 2) || '/' || SUBSTRING(DTNASCIMENTO FROM 1 FOR 4) AS DTNASCIMENTO,SUBSTRING(CPF FROM 1 FOR 3) || '.' || SUBSTRING(CPF FROM 4 FOR 3 ) || '.' || SUBSTRING(CPF FROM 7 FOR 3) || '-' || SUBSTRING(CPF FROM 10 FOR 2) AS CPF FROM TBALUNO A WHERE CAST(NOME AS VARCHAR(100)) LIKE @nome ORDER BY NOME";
+            string selectSQL = "SELECT MATRICULA,NOME,SEXO,DTNASCIMENTO ,CPF  FROM TBALUNO A WHERE CAST(NOME AS VARCHAR(100)) LIKE @nome ORDER BY NOME";
 
             List<AlunoModel> alunos = new List<AlunoModel>();
 
@@ -189,14 +192,16 @@ namespace FichaAluno.Models.Repository
 
                 using (FbDataReader reader = cmd.ExecuteReader())
                 {
+                    
                     while (reader.Read())
                     {
+                        string dtnascimentoString = reader.GetString(reader.GetOrdinal("DTNASCIMENTO"));
                         AlunoModel aluno = new AlunoModel()
                         {
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO = reader.GetDateTime(reader.GetOrdinal("DTNASCIMENTO")),
+                            NASCIMENTO = DateTime.ParseExact(dtnascimentoString, "yyyyMMdd", CultureInfo.InvariantCulture),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
 

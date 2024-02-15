@@ -123,22 +123,52 @@ namespace FichaAluno.Controllers
             {
                 try
                 {
-                    if (aluno.MATRICULA > 0)
+                    ValidacaoCPF validacaoCPF = new ValidacaoCPF();
+
+                    if (aluno.CPF == null)
                     {
-                        repositorio.Update(aluno);
-                        TempData["ShowSuccessModal"] = true;
+                        if (aluno.MATRICULA > 0)
+                        {
+                            repositorio.Update(aluno);
+                            TempData["ShowSuccessModal"] = true;
+                        }
+                        else
+                        {
+                            repositorio.Add(aluno);
+                            TempData["ShowSuccessModal"] = true;
+                        }
+                        return View(aluno);
+                        
+
+                    }
+                    else if(!validacaoCPF.ValidarCPF(aluno.CPF))
+                    {
+
+                        TempData["ShowErrorModal"] = true;
+                        return View(aluno);
+
                     }
                     else
                     {
-                        repositorio.Add(aluno);
-                        TempData["ShowSuccessModal"] = true;
+                        if (aluno.MATRICULA > 0)
+                        {
+                            repositorio.Update(aluno);
+                            TempData["ShowSuccessModal"] = true;
+                        }
+                        else
+                        {
+                            repositorio.Add(aluno);
+                            TempData["ShowSuccessModal"] = true;
+                        }
+                        return View(aluno);
                     }
-                    return View(aluno);
+                    
                 }
                 catch (Exception ex)
                 {
                     var erro = new ErrorModel { ErrorMessage = ex.Message };
                     ModelState.AddModelError("", erro.ErrorMessage);
+                    TempData["ShowErrorModal"] = true;
                 }
             }
             else
@@ -152,11 +182,10 @@ namespace FichaAluno.Controllers
             return View(aluno);
         }
 
+    }
+
+
+
+
 
     }
-            
-
-            
-        
-
-}
