@@ -1,6 +1,5 @@
 ﻿using FichaAluno.Data.DAO;
 using FichaAluno.Models.Domain;
-using System.Linq.Expressions;
 
 namespace FichaAluno.Models.Repository
 {

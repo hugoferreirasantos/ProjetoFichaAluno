@@ -1,9 +1,6 @@
 ﻿using FichaAluno.Models.Domain;
 using FirebirdSql.Data.FirebirdClient;
 using System.Globalization;
-using System.Linq.Expressions;
-using System.Security;
-using System.Security.Cryptography;
 
 namespace FichaAluno.Models.Repository
 {
