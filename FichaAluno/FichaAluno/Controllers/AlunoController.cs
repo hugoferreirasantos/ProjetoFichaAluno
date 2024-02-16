@@ -129,6 +129,7 @@ namespace FichaAluno.Controllers
                     {
                         if (aluno.MATRICULA > 0)
                         {
+
                             repositorio.Update(aluno);
                             TempData["ShowSuccessModal"] = true;
                         }
@@ -141,7 +142,7 @@ namespace FichaAluno.Controllers
                         
 
                     }
-                    else if(!validacaoCPF.ValidarCPF(aluno.CPF))
+                    else if(!validacaoCPF.ValidarCPF(aluno.CPF) || aluno.CPF.Length > 11)
                     {
 
                         TempData["ShowErrorModal"] = true;

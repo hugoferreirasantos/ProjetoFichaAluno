@@ -20,12 +20,13 @@
 
     <div class="form-group">
         <label asp-for="CPF">CPF</label>
-        <input asp-for="CPF" type="text" class="form-control" maxlength="11" placeholder="Digite o CPF">
+        <input asp-for="CPF" type="text" class="form-control" maxlength="11" placeholder="Digite o CPF (Apenas números)">
     </div>
+
 
     <div class="form-group">
         <label asp-for="NASCIMENTO">Nascimento</label>
-        <input id="NASCIMENTO" asp-for="NASCIMENTO" type="date" class="form-control" maxlength="4" placeholder="DD/MM/YYYY" pattern="\d{8}" required>
+        <input id="NASCIMENTO" asp-for="NASCIMENTO" type="date" class="form-control"  required>
         <span asp-validation-for="NASCIMENTO" class="text-danger"></span>
     </div>
 
@@ -103,6 +104,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+
             <div class="modal-body">
                 O CPF digitado é inválido.
             </div>
@@ -132,4 +134,5 @@
             errorModal.show();
         }
     });
+
 </script>

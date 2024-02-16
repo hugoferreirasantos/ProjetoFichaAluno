@@ -11,6 +11,7 @@ namespace FichaAluno.Models.Domain
         public string NOME { set; get; }
         public string? CPF { set; get; }
 
+        [Required(ErrorMessage = "Digite uma data de nascimento!")]
         public DateTime NASCIMENTO { set; get; }
 
         public string CPF_FORMATADO { get { return CPF.FormatarCPF(); } }
