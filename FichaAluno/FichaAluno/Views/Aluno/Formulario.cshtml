@@ -3,6 +3,8 @@
     // restante do código
 }
 
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <div class="text-center">
 
     <h1 class="display-4 ">@(Model != null ? (Model.MATRICULA == 0 ? ViewData["Title"] = "Adicionar Aluno" : ViewData["Title"] = "Edição de Aluno") : ViewData["Title"] = "Adicionar Aluno")</h1>
@@ -14,20 +16,19 @@
 
     <div class="form-group">
         <label asp-for="NOME">Nome</label>
-        <input asp-for="NOME" type="text" class="form-control" minlength="3" maxlength="100" placeholder="Digite o nome" required>
+        <input asp-for="NOME" type="text" class="form-control" minlength="3" maxlength="100" placeholder="Digite o nome" oninput="this.value = this.value.toUpperCase()" required>
         <span asp-validation-for="NOME" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="CPF">CPF</label>
-        <input asp-for="CPF" type="text" class="form-control" maxlength="11" placeholder="Digite o CPF (Apenas números)">
+        <input asp-for="CPF" type="number" class="form-control" placeholder="Digite o CPF (Apenas números)">
     </div>
 
-
     <div class="form-group">
-        <label asp-for="NASCIMENTO">Nascimento</label>
-        <input id="NASCIMENTO" asp-for="NASCIMENTO" type="date" class="form-control"  required>
-        <span asp-validation-for="NASCIMENTO" class="text-danger"></span>
+        <label asp-for="NASCIMENTO_FORMATADO" for="NASCIMENTO">Nascimento</label>
+        <input asp-for="NASCIMENTO_FORMATADO" id="NASCIMENTO" name="NASCIMENTO" type="text" maxlength="10" class="form-control" pattern="\d{1,2}/\d{1,2}/\d{4}" required>
+        <span class="text-danger"></span>
     </div>
 
 
@@ -49,6 +50,48 @@
 </form>
 
 
+<div class="modal" id="erroNome">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Atenção</h4>
+                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body" id="erroNomeBody">
+                Formato inválido, insira pelo menos 3 caracteres no Nome.
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Atenção</h4>
+                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+            </div>
+         
+            <div class="modal-body" id="modalBody">
+            </div>
+           
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -109,13 +152,15 @@
                 O CPF digitado é inválido.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
 </div>
 
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var showSuccessModal = '@TempData["ShowSuccessModal"]';
@@ -134,5 +179,99 @@
             errorModal.show();
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var showSuccessModal = '@TempData["ShowErrorModalNome"]';
+        if (showSuccessModal === 'True') {
+            var successModalElement = document.getElementById('erroNome');
+            var successModal = new bootstrap.Modal(successModalElement);
+            successModal.show();
+        }
+    });
+
+
+    var input = document.getElementById('NASCIMENTO');
+    input.addEventListener('input', function (e) {
+        this.type = 'text';
+        if (this.value.length == 2 || this.value.length == 5) {
+            this.value += '/';
+        }
+    });
+
+    input.addEventListener('blur', function (e) {
+        this.type = 'text';
+        var match = this.value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+        if (match) {
+            var year = parseInt(match[3], 10);
+            var month = parseInt(match[2], 10) - 1; // months are 0-11
+            var day = parseInt(match[1], 10);
+            var date = new Date(year, month, day);
+            if (date.getFullYear() !== year || date.getMonth() != month || date.getDate() !== day) {
+                this.value = '';
+            }
+        } else {
+        }
+    });
+
+    var input = document.getElementById('NASCIMENTO');
+
+    input.addEventListener('keydown', function (e) {
+        // Verifique se a tecla pressionada foi a tecla 'Delete'
+        if (e.key === 'Delete') {
+            // Se foi, limpe o campo de entrada
+            this.value = '';
+        }
+    });
+
+
+    input.addEventListener('blur', function (e) {
+        this.type = 'text';
+        var match = this.value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+        if (match) {
+            var year = parseInt(match[3], 10);
+            var month = parseInt(match[2], 10) - 1; // months are 0-11
+            var day = parseInt(match[1], 10);
+            var date = new Date(year, month, day);
+            if (date.getFullYear() !== year || date.getMonth() != month || date.getDate() !== day) {
+                showErrorModal('Data inválida');
+                this.value = '';
+            }
+        } else {
+            showErrorModal('Formato inválido. Por favor, insira a data no formato DD/MM/AAAA');
+            this.value = '';
+        }
+    });
+
+    function showErrorModal(message) {
+        $('#modalBody').text(message);
+        $('#myModal').modal('show');
+    }
+
+    $(document).ready(function () {
+        $('#CPF').keypress(function (e) {
+            if (this.value.length == 11) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $('#NASCIMENTO').on('keydown', function (e) {
+            if (e.which == 8) {
+                var inputVal = this.value;
+                var newCursorPos = this.selectionStart;
+                if (inputVal[newCursorPos - 1] == "/") {
+                    $(this).val(inputVal.substring(0, newCursorPos - 1) + inputVal.substring(newCursorPos));
+                    this.selectionStart = newCursorPos - 1;
+                    this.selectionEnd = newCursorPos - 1;
+                    e.preventDefault();
+                }
+            }
+        });
+    });
+
+
+
 
 </script>

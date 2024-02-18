@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "IRfTXOVQAdqQ/R8c/uXa6PWSKRnKFaXK9JJKeW4oWgw=",
+  "Hash": "F3/v8cBKD5TT72TSa2WH8C0oimhYiZuD3SwhD5BMR8U=",
   "Source": "FichaAluno",
   "BasePath": "_content/FichaAluno",
   "Mode": "Default",
@@ -110,25 +110,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\IMG_ESCOLAR_MANAGER.png"
-    },
-    {
-      "Identity": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\js\\site.js",
-      "SourceId": "FichaAluno",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\",
-      "BasePath": "_content/FichaAluno",
-      "RelativePath": "js/site.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
       "Identity": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
@@ -1212,6 +1193,44 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Identity": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\ScripFormulario\\ScripFormulario.js",
+      "SourceId": "FichaAluno",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\",
+      "BasePath": "_content/FichaAluno",
+      "RelativePath": "ScripFormulario/ScripFormulario.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ScripFormulario\\ScripFormulario.js"
+    },
+    {
+      "Identity": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\ScripIndex\\ScripIndex.js",
+      "SourceId": "FichaAluno",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\",
+      "BasePath": "_content/FichaAluno",
+      "RelativePath": "ScripIndex/ScripIndex.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ScripIndex\\ScripIndex.js"
     }
   ]
 }

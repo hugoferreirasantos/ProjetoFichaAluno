@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\FichaAluno.bundle.scp.css"
     },
     {
+      "Id": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\ScripFormulario\\ScripFormulario.js",
+      "PackagePath": "staticwebassets\\ScripFormulario\\ScripFormulario.js"
+    },
+    {
+      "Id": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\ScripIndex\\ScripIndex.js",
+      "PackagePath": "staticwebassets\\ScripIndex\\ScripIndex.js"
+    },
+    {
       "Id": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -15,10 +23,6 @@
     {
       "Id": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\img\\IMG_ESCOLAR_MANAGER.png",
       "PackagePath": "staticwebassets\\img\\IMG_ESCOLAR_MANAGER.png"
-    },
-    {
-      "Id": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\js\\site.js",
-      "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
       "Id": "D:\\Ambiente_Desenvolvimento\\Aulas_C#\\ProjetoCadastroAluns\\FichaAluno\\FichaAluno\\wwwroot\\lib\\bootstrap\\LICENSE",

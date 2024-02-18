@@ -12,7 +12,7 @@ namespace FichaAluno.Models.Repository
 
             using(FbCommand cmd = new FbCommand(insertSQL, dao.connection))
             {
-                cmd.Parameters.AddWithValue("@Nome", entity.NOME);
+                cmd.Parameters.AddWithValue("@Nome", entity.NOME.ToUpper());
                 if (entity.CPF != null)
                 {
                     cmd.Parameters.AddWithValue("@Cpf", entity.CPF);
@@ -50,7 +50,7 @@ namespace FichaAluno.Models.Repository
 
             using (FbCommand cmd = new FbCommand(updateSQL, dao.connection))
             {
-                cmd.Parameters.AddWithValue("@Nome", entity.NOME);
+                cmd.Parameters.AddWithValue("@Nome", entity.NOME.ToUpper());
                 if(entity.CPF != null)
                 {
                     cmd.Parameters.AddWithValue("@Cpf", entity.CPF);
@@ -59,17 +59,11 @@ namespace FichaAluno.Models.Repository
                 {
                     cmd.Parameters.AddWithValue("@Cpf", DBNull.Value);
                 }
-                if(entity.NASCIMENTO != null)
-                {
-                    string nascimentoFormatado = entity.NASCIMENTO.ToString("yyyyMMdd");
-                    int nascimentoAsInt = int.Parse(nascimentoFormatado);
-                    cmd.Parameters.AddWithValue("@Nascimento", nascimentoAsInt);
-                }
-                else
-                {
-                    cmd.Parameters.AddWithValue("@Nascimento", DBNull.Value);
-                }
-                
+                string nascimentoFormatado = entity.NASCIMENTO.ToString("yyyyMMdd");
+                int nascimentoAsInt = int.Parse(nascimentoFormatado);
+                cmd.Parameters.AddWithValue("@Nascimento", nascimentoAsInt);
+
+
                 cmd.Parameters.AddWithValue("@Sexo", entity.SEXO);
                 cmd.Parameters.AddWithValue("@Matricula", entity.MATRICULA);
 
@@ -90,18 +84,19 @@ namespace FichaAluno.Models.Repository
                 {
                     while (reader.Read())
                     {
-                        string dtnascimentoString = reader.GetString(reader.GetOrdinal("DTNASCIMENTO"));
-
                         AlunoModel aluno = new AlunoModel()
                         {
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO = DateTime.ParseExact(dtnascimentoString, "yyyyMMdd", CultureInfo.InvariantCulture),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
 
-                        
+                        if (!reader.IsDBNull(reader.GetOrdinal("DTNASCIMENTO")))
+                        {
+                            string dtnascimentoString = reader.GetString(reader.GetOrdinal("DTNASCIMENTO"));
+                            aluno.NASCIMENTO = DateTime.ParseExact(dtnascimentoString, "yyyyMMdd", CultureInfo.InvariantCulture);
+                        }
 
                         alunos.Add(aluno);
                     }
@@ -134,9 +129,14 @@ namespace FichaAluno.Models.Repository
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO = DateTime.ParseExact(dataComoString, "yyyyMMdd", CultureInfo.InvariantCulture),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
+
+                        if (!reader.IsDBNull(reader.GetOrdinal("DTNASCIMENTO")))
+                        {
+                            string dtnascimentoString = reader.GetString(reader.GetOrdinal("DTNASCIMENTO"));
+                            aluno.NASCIMENTO = DateTime.ParseExact(dtnascimentoString, "yyyyMMdd", CultureInfo.InvariantCulture);
+                        }
                     }
                 }
             }
@@ -159,15 +159,19 @@ namespace FichaAluno.Models.Repository
                     
                     while (reader.Read())
                     {
-                        string dtnascimentoString = reader.GetString(reader.GetOrdinal("DTNASCIMENTO"));
                         AlunoModel aluno = new AlunoModel()
                         {
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO = DateTime.ParseExact(dtnascimentoString, "yyyyMMdd", CultureInfo.InvariantCulture),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
+
+                        if (!reader.IsDBNull(reader.GetOrdinal("DTNASCIMENTO")))
+                        {
+                            string dtnascimentoString = reader.GetString(reader.GetOrdinal("DTNASCIMENTO"));
+                            aluno.NASCIMENTO = DateTime.ParseExact(dtnascimentoString, "yyyyMMdd", CultureInfo.InvariantCulture);
+                        }
 
                         alunos.Add(aluno);
                     }
@@ -192,15 +196,19 @@ namespace FichaAluno.Models.Repository
                     
                     while (reader.Read())
                     {
-                        string dtnascimentoString = reader.GetString(reader.GetOrdinal("DTNASCIMENTO"));
                         AlunoModel aluno = new AlunoModel()
                         {
                             MATRICULA = reader.GetInt32(reader.GetOrdinal("MATRICULA")),
                             NOME = reader.IsDBNull(reader.GetOrdinal("NOME")) ? null : reader.GetString(reader.GetOrdinal("NOME")),
                             CPF = reader.IsDBNull(reader.GetOrdinal("CPF")) ? null : reader.GetString(reader.GetOrdinal("CPF")),
-                            NASCIMENTO = DateTime.ParseExact(dtnascimentoString, "yyyyMMdd", CultureInfo.InvariantCulture),
                             SEXO = reader.IsDBNull(reader.GetOrdinal("SEXO")) ? null : (EnumeradorSexo)reader.GetInt32(reader.GetOrdinal("SEXO"))
                         };
+
+                        if (!reader.IsDBNull(reader.GetOrdinal("DTNASCIMENTO")))
+                        {
+                            string dtnascimentoString = reader.GetString(reader.GetOrdinal("DTNASCIMENTO"));
+                            aluno.NASCIMENTO = DateTime.ParseExact(dtnascimentoString, "yyyyMMdd", CultureInfo.InvariantCulture);
+                        }
 
                         alunos.Add(aluno);
                     }

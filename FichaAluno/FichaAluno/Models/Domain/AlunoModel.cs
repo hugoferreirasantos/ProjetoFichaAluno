@@ -32,10 +32,11 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(cpf))
             return "";
 
-        var cpfNumeros = Regex.Replace(cpf, @"\D", ""); // Remove todos os caracteres não numéricos
+        var cpfNumeros = Regex.Replace(cpf, @"\D", ""); 
 
         if (cpfNumeros.Length != 11)
-            throw new ArgumentException("CPF inválido.");
+            return "";
+
 
         return $"{cpfNumeros.Substring(0, 3)}.{cpfNumeros.Substring(3, 3)}.{cpfNumeros.Substring(6, 3)}-{cpfNumeros.Substring(9, 2)}";
     }

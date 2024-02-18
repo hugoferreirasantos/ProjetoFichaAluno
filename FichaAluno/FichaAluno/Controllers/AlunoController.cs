@@ -65,19 +65,19 @@ namespace FichaAluno.Controllers
         {
             try
             {
-                // Busca o aluno pelo ID
+                
                 var aluno = repositorio.Get("MATRICULA = @p0", new object[] { id });
 
-                // Verifica se o aluno existe
+                
                 if (aluno == null)
                 {
                     return NotFound();
                 }
 
-                // Exclui o aluno
+                
                 repositorio.Remove(aluno);
 
-                // Redireciona para a página de lista de alunos
+                
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -107,6 +107,7 @@ namespace FichaAluno.Controllers
             else if (opcaoBusca == "nome")
             {
                 alunos = repositorio.GetAllGetByNome(valorBusca);
+
             }
             else
             {
@@ -129,41 +130,65 @@ namespace FichaAluno.Controllers
                     {
                         if (aluno.MATRICULA > 0)
                         {
-
+                            if(aluno.NOME.Length <= 2)
+                            {
+                                TempData["ShowErrorModalNome"] = true;
+                                return View(aluno);
+                            }
+                         
                             repositorio.Update(aluno);
                             TempData["ShowSuccessModal"] = true;
                         }
                         else
                         {
+                            if (aluno.NOME.Length <= 2)
+                            {
+                                TempData["ShowErrorModalNome"] = true;
+                                return View(aluno);
+                            }
+
                             repositorio.Add(aluno);
                             TempData["ShowSuccessModal"] = true;
                         }
                         return View(aluno);
-                        
-
                     }
-                    else if(!validacaoCPF.ValidarCPF(aluno.CPF) || aluno.CPF.Length > 11)
+                    else if (!validacaoCPF.ValidarCPF(aluno.CPF))
                     {
-
                         TempData["ShowErrorModal"] = true;
                         return View(aluno);
-
+                    }
+                    else if (aluno.CPF.Length != 11)
+                    {
+                        TempData["ShowErrorModal"] = true;
+                        return View(aluno);
                     }
                     else
                     {
                         if (aluno.MATRICULA > 0)
                         {
+                            if (aluno.NOME.Length <= 2)
+                            {
+                                TempData["ShowErrorModalNome"] = true;
+                                return View(aluno);
+                            }
+
                             repositorio.Update(aluno);
                             TempData["ShowSuccessModal"] = true;
                         }
                         else
                         {
+                            if (aluno.NOME.Length <= 2)
+                            {
+                                TempData["ShowErrorModalNome"] = true;
+                                return View(aluno);
+                            }
+
                             repositorio.Add(aluno);
                             TempData["ShowSuccessModal"] = true;
                         }
                         return View(aluno);
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -183,10 +208,11 @@ namespace FichaAluno.Controllers
             return View(aluno);
         }
 
-    }
-
-
-
-
 
     }
+
+
+
+
+
+}
